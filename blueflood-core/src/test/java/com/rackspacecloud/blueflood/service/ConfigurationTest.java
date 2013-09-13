@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Map;
 
 public class ConfigurationTest {
@@ -47,8 +48,8 @@ public class ConfigurationTest {
         Assert.assertFalse(properties.containsKey("TEST_PROPERTY"));
         Assert.assertEquals("ALL", properties.get("SHARDS").toString());
 
-        String configPath = new File("src/test/resources/bf-override-config.properties").getAbsolutePath();
-        System.setProperty("blueflood.config", "file://" + configPath);
+        String configPath = new File("src/test/resources/bf-override-config.properties").toURI().toURL().toString();
+        System.setProperty("blueflood.config", configPath);
         Configuration.init();
 
         Assert.assertEquals("foo", properties.get("TEST_PROPERTY"));
